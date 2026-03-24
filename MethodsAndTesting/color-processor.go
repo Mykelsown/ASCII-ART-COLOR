@@ -1,7 +1,7 @@
 package asciiart
 
 import (
-	// "fmt"
+	"fmt"
 	"strings"
 )
 
@@ -29,7 +29,7 @@ func ApplyColor(colorType string, arguments []string) string {
 	mainString := arguments[len(arguments)-1] // gets the main string in the argument
 	options := arguments[:len(arguments)-1]   // gets the substrings(s) that needs to be colored in the main string from the argument
 
-	FormatedMainString := FormatPrinter(mainString) //This gets the ascii-art of the main string
+	formatedMainString := FormatPrinter(mainString) //This gets the ascii-art of the main string
 	// This is the main string that will store the final output
 	var newFormattedMain strings.Builder
 
@@ -42,13 +42,17 @@ func ApplyColor(colorType string, arguments []string) string {
 		if contains {
 			coloredFormattedOption := colorStorage[colorType] + formatedOption + "\033[0m"
 
-			mashedFormattedMainString := strings.ReplaceAll(FormatedMainString, "\n", "")
-			mashedColoredFormattedOption := strings.ReplaceAll(coloredFormattedOption, "\n", "")
-			mashedFormattedOutput := strings.ReplaceAll(formatedOption, "\n", "")
+			splittedFormattedMainString := strings.Split(formatedMainString, "\n")
+			splittedFormattedOption := strings.Split(formatedOption, "\n")
+			splittedColoredFormattedOption := strings.Split(coloredFormattedOption, "\n")
 
-			
-			
-			newFormattedMain.WriteString(strings.ReplaceAll(mashedFormattedMainString, mashedFormattedOutput, mashedColoredFormattedOption))
+			var slicedModifiedMainString = make([]string, len(splittedFormattedMainString))
+
+			for i, asciiChars := range splittedFormattedMainString {
+				slicedModifiedMainString = append(slicedModifiedMainString, strings.ReplaceAll(asciiChars, splittedFormattedOption[i], splittedColoredFormattedOption[i]))
+			}
+			fmt.Println(strings.Join(slicedModifiedMainString, "\n"))
+			newFormattedMain.WriteString(formatedMainString)
 		}
 	}
 
