@@ -1,7 +1,7 @@
 package asciiart
 
 import (
-	"fmt"
+	// "fmt"
 	"strings"
 )
 
@@ -52,8 +52,7 @@ func ApplyColor(colorType string, arguments []string) string {
 				slicedModifiedMainString[i] = strings.Replace(asciiChars, splittedFormattedOption[i], splittedColoredFormattedOption[i], 1)
 				// fmt.Println(slicedModifiedMainString)
 			}
-			fmt.Println(strings.Join(slicedModifiedMainString, "\n"))
-			newFormattedMain.WriteString(formatedMainString)
+			newFormattedMain.WriteString(strings.Join(slicedModifiedMainString, "\n"))
 		}
 	}
 
