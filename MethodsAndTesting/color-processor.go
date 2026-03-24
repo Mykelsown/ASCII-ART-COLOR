@@ -41,10 +41,16 @@ func ApplyColor(colorType string, arguments []string) string {
 
 		if contains {
 			coloredFormattedOption := colorStorage[colorType] + formatedOption + "\033[0m"
-			newFormattedMain.WriteString(strings.ReplaceAll(FormatedMainString, formatedOption, coloredFormattedOption))
+
+			mashedFormattedMainString := strings.ReplaceAll(FormatedMainString, "\n", "")
+			mashedColoredFormattedOption := strings.ReplaceAll(coloredFormattedOption, "\n", "")
+			mashedFormattedOutput := strings.ReplaceAll(formatedOption, "\n", "")
+
+			
+			
+			newFormattedMain.WriteString(strings.ReplaceAll(mashedFormattedMainString, mashedFormattedOutput, mashedColoredFormattedOption))
 		}
 	}
 
-	// fmt.Print(newFormattedMain)
 	return newFormattedMain.String()
 }
