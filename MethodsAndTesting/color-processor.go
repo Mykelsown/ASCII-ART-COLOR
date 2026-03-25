@@ -34,13 +34,12 @@ func ApplyColor(colorType string, arguments []string) string {
 
 	// The main logic that will check for each sub-string in the main string and then apply the color to them
 	for _, v := range options {
-		prefix, suffix, contains := strings.Cut(mainString, v)
+		prefix, suffix, contains := subExistOverOne(mainString, v)
 
 		splittedFormattedMainString := strings.Split(formatedMainString, "\n")
 
 		var slicedModifiedMainString = make([]string, len(splittedFormattedMainString))
 		if contains {
-			
 
 			splittedFormattedPrefix := strings.Split(FormatPrinter(prefix), "\n")
 			splittedFormattedOption := strings.Split(FormatPrinter(v), "\n")
@@ -55,4 +54,13 @@ func ApplyColor(colorType string, arguments []string) string {
 	}
 
 	return newFormattedMain.String()
+}
+
+func subExistOverOne(main, sub string) (string, string, bool) {
+	prefix, suffix, found := strings.Cut(main, sub)
+	if !found {
+		return "", "", false
+	}
+	_, _, foundAgain := subExistOverOne(suffix, sub)
+	return prefix, suffix, foundAgain
 }
