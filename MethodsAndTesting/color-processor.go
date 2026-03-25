@@ -46,8 +46,8 @@ func ApplyColor(colorType string, arguments []string) string {
 			var slicedModifiedMainString = make([]string, len(splittedFormattedMainString))
 
 			for i, asciiChars := range splittedFormattedMainString {
-				newAsciiChars := strings.ReplaceAll(asciiChars, splittedFormattedOption[i], "")
-				slicedModifiedMainString[i] = newAsciiChars + colorStorage[colorType] + splittedFormattedOption[i] + "\033[0m" 
+				newAsciiChars := strings.ReplaceAll(asciiChars, splittedFormattedOption[i], colorStorage[colorType] + splittedFormattedOption[i] + "\033[0m" )
+				slicedModifiedMainString[i] = newAsciiChars 
 			}
 			newFormattedMain.WriteString(strings.Join(slicedModifiedMainString, "\n"))
 		}

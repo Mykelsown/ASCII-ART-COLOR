@@ -42,6 +42,7 @@ func FormatPrinter(input string) string {
 					continue
 				}
 
+
 				charIndex := int(char) - 32 // Find character position in banner
 				lineIndex := charIndex*9 + 1 + row // Each character takes 9 lines (8 art lines + 1 empty separator)
 
