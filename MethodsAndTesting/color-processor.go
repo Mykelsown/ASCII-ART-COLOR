@@ -34,23 +34,24 @@ func ApplyColor(colorType string, arguments []string) string {
 
 	// The main logic that will check for each sub-string in the main string and then apply the color to them
 	for _, v := range options {
-		formatedOption := FormatPrinter(v) // This stores the sub-string ascii-art
-		// Checks if the substring passed from the terminal really exist in the main string
-		contains := strings.Contains(mainString, v)
+		prefix, suffix, contains := strings.Cut(mainString, v)
 
+		splittedFormattedMainString := strings.Split(formatedMainString, "\n")
+
+		var slicedModifiedMainString = make([]string, len(splittedFormattedMainString))
 		if contains {
+			
 
-			splittedFormattedMainString := strings.Split(formatedMainString, "\n")
-			splittedFormattedOption := strings.Split(formatedOption, "\n")
+			splittedFormattedPrefix := strings.Split(FormatPrinter(prefix), "\n")
+			splittedFormattedOption := strings.Split(FormatPrinter(v), "\n")
+			splittedFormattedSuffix := strings.Split(FormatPrinter(suffix), "\n")
 
-			var slicedModifiedMainString = make([]string, len(splittedFormattedMainString))
-
-			for i, asciiChars := range splittedFormattedMainString {
-				newAsciiChars := strings.ReplaceAll(asciiChars, splittedFormattedOption[i], colorStorage[colorType] + splittedFormattedOption[i] + "\033[0m" )
-				slicedModifiedMainString[i] = newAsciiChars 
+			for i := range splittedFormattedMainString {
+				colored := colorStorage[colorType] + splittedFormattedOption[i] + "\033[0m"
+				slicedModifiedMainString[i] = splittedFormattedPrefix[i] + colored + splittedFormattedSuffix[i]
 			}
-			newFormattedMain.WriteString(strings.Join(slicedModifiedMainString, "\n"))
 		}
+		newFormattedMain.WriteString(strings.Join(slicedModifiedMainString, "\n"))
 	}
 
 	return newFormattedMain.String()
