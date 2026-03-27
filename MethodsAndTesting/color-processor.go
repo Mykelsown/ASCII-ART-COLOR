@@ -2,6 +2,7 @@ package asciiart
 
 import (
 	"strings"
+	"log"
 )
 
 var colorStorage = map[string]string{
@@ -24,6 +25,12 @@ var colorStorage = map[string]string{
 }
 
 func ApplyColor(colorType string, arguments []string) string {
+
+	//Checks if the color user passes in is not in the list of color available
+	if colorStorage[colorType] == "" {
+		log.Fatalf("the color (%v) you passed isn't in the list of colors available", colorType)
+	}
+
 	mainString := arguments[len(arguments)-1]
 	options := arguments[:len(arguments)-1]
 
