@@ -27,6 +27,6 @@ func main() {
 EX: go run . --color=<color> <substring to be colored> "something"`)
 		return
 	} else {
-		fmt.Println(asciiart.FormatPrinter(arguments[len(arguments)-1]))
+		fmt.Println(asciiart.FormatPrinter(arguments[len(arguments)-1])) // this allows for validation of the base ascii-art project
 	}
 }
