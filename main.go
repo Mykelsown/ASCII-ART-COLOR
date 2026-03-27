@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -15,11 +16,17 @@ func main() {
 
 	flag.Parse()
 	arguments := flag.Args()
+
+	fmt.Println(flagType)
+
 	// This checks for wrong flag input the user might pass in through the terminal
-	if flagType != "--color="+colorValue {
+	if flagType == "--color="+colorValue && colorValue != "white" {
+		fmt.Println(asciiart.ApplyColor(colorValue, arguments))
+	} else if strings.HasPrefix(flagType, "-color=") || strings.HasPrefix(flagType, "color=") || strings.HasPrefix(flagType, ".color=") {
 		fmt.Println(`Usage: go run . [OPTION] [STRING]
 EX: go run . --color=<color> <substring to be colored> "something"`)
 		return
+	} else {
+		fmt.Println(asciiart.FormatPrinter(arguments[len(arguments)-1]))
 	}
-	fmt.Println(asciiart.ApplyColor(colorValue, arguments))
 }
