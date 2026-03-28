@@ -6,23 +6,24 @@ import (
 )
 
 var colorStorage = map[string]string{
-	"red":     "\033[31m",
-	"green":   "\033[32m",
-	"yellow":  "\033[33m",
-	"blue":    "\033[34m",
-	"magenta": "\033[35m",
-	"cyan":    "\033[36m",
-	"white":   "\033[37m",
-	"black":   "\033[30m",
+	"red":     "\033[38;2;255;0;0m",
+	"green":   "\033[38;2;0;255;0m",
+	"yellow":  "\033[38;2;255;255;0m",
+	"blue":    "\033[38;2;0;0;255m",
+	"magenta": "\033[38;2;255;0;255m",
+	"cyan":    "\033[38;2;0;255;255m",
+	"white":   "\033[38;2;255;255;255m",
+	"black":   "\033[38;2;0;0;0m",
 
-	"bright_red":     "\033[91m",
-	"bright_green":   "\033[92m",
-	"bright_yellow":  "\033[93m",
-	"bright_blue":    "\033[94m",
-	"bright_magenta": "\033[95m",
-	"bright_cyan":    "\033[96m",
-	"bright_white":   "\033[97m",
+	"bright_red":     "\033[38;2;255;85;85m",
+	"bright_green":   "\033[38;2;85;255;85m",
+	"bright_yellow":  "\033[38;2;255;255;85m",
+	"bright_blue":    "\033[38;2;85;85;255m",
+	"bright_magenta": "\033[38;2;255;85;255m",
+	"bright_cyan":    "\033[38;2;85;255;255m",
+	"bright_white":   "\033[38;2;255;255;255m", // Usually same as white
 }
+
 
 func ApplyColor(colorType string, arguments []string) string {
 
