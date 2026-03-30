@@ -67,7 +67,7 @@ func TestFormatPrinter(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := FormatPrinter(tt.input)
-			
+
 			if got != tt.expected {
 				// Show detailed comparison
 				t.Errorf("\nTest: %s\nInput: %q\n\nExpected (%d chars, %d lines):\n%q\n\nGot (%d chars, %d lines):\n%q",

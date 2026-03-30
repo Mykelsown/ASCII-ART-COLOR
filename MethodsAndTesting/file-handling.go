@@ -13,6 +13,5 @@ func FileHandler() ([]byte, bool) {
 		return []byte{}, false // returns an empty slice of byte and false if there's is an error
 	}
 
-
 	return data, true
 }
