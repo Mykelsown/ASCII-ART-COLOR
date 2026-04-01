@@ -10,22 +10,48 @@ import (
 
 func main() {
 	var colorValue string
-	flagType := os.Args[1]
 
-	flag.StringVar(&colorValue, "color", "white", "The color of the output")
+	// If only one argument is passed (program name + 1 argument),
+	// run the base ascii-art functionality with a default string
+	if len(os.Args) == 2 {
+		fmt.Println(asciiart.FormatPrinter("something")) // base project output
+		return
+	}
 
+	// Get the first CLI argument (expected to be the flag)
+	flagAll := os.Args[1]
+
+	// Split the argument at "=" to isolate the flag name (e.g., "--color")
+	beforeEqualTo, _, _ := strings.Cut(flagAll, "=")
+
+	// Define the --color flag with a default value of "white"
+	flag.StringVar(&colorValue, "color", "white", "stores the color")
+
+	// Parse all flags from command-line input
 	flag.Parse()
+
+	// Get remaining arguments after flag parsing
+	// These are expected to be: substring + main string
 	arguments := flag.Args()
 
-	// This checks for wrong flag input the user might pass in through the terminal
-	if flagType == "--color="+colorValue && colorValue != "white" {
+	// If the flag is exactly "--color", apply coloring logic
+	if beforeEqualTo == "--color" {
+
+		// Call function that applies color to the given substring within the string
 		fmt.Println(asciiart.ApplyColor(colorValue, arguments))
+
+	} else if (
+		// Check for invalid flag formats like:
+		// "-color", ".color", "color", or anything not exactly "--color"
+		strings.HasPrefix(beforeEqualTo, "-color") ||
+		strings.HasPrefix(beforeEqualTo, ".color") ||
+		strings.HasPrefix(beforeEqualTo, "color")) ||
+
+		// Also reject anything whose length is not equal to "--color" (7 chars)
+		len(beforeEqualTo) != 7 {
+
+		// Print usage instructions for incorrect input
+		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <substring to be colored> \"something\"")
 		return
-	} else if strings.HasPrefix(flagType, "-color=") || strings.HasPrefix(flagType, "color=") || strings.HasPrefix(flagType, ".color=") {
-		fmt.Println(`Usage: go run . [OPTION] [STRING]
-EX: go run . --color=<color> <substring to be colored> "something"`)
-		return
-	} else {
-		fmt.Println(asciiart.FormatPrinter(arguments[len(arguments)-1])) // this allows for validation of the base ascii-art project
 	}
 }
