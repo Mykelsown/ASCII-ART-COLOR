@@ -13,7 +13,7 @@ func main() {
 
 	// Base case: only one argument provided
 	if len(os.Args) == 2 {
-		fmt.Println(asciiart.FormatPrinter("something"))
+		fmt.Println(asciiart.FormatPrinter(os.Args[1]))
 		return
 	}
 
@@ -32,11 +32,16 @@ func main() {
 
 	// Validate the flag format using raw input
 	flagAll := os.Args[1]
-	beforeEqualTo, _, _ := strings.Cut(flagAll, "=")
+	beforeEqualTo, _, withEqualTo := strings.Cut(flagAll, "=")
+
+	if !withEqualTo {
+		printUsage()
+		return
+	}
 
 	// Valid flag case
 	if beforeEqualTo == "--color" {
-		fmt.Println(asciiart.ApplyColor(colorValue, arguments))
+		fmt.Print(asciiart.ApplyColor(colorValue, arguments))
 		return
 	}
 
@@ -53,7 +58,5 @@ func main() {
 
 // Extracted usage message for reusability and cleaner main()
 func printUsage() {
-	fmt.Println(`Usage: go run . [OPTION] [STRING]
-
-EX: go run . --color=<color> <substring to be colored> "something"`)
+	fmt.Println("Usage: go run . [OPTION] [STRING]\nEX: go run . --color=<color> <substring to be colored> \"something\"")
 }
